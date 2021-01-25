@@ -22,7 +22,7 @@
     </bean>
 
     <!-- 웹 리소스 경로 설정 -->
-    <mvc:resources mapping="/**" location="resources/"/>
+    <mvc:resources mapping="/**" location="/resources/"/>
 
 
     <!-- 타일즈 뷰리졸버 설정 -->

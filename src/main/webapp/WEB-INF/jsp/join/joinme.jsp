@@ -31,7 +31,7 @@
 
     <div class="card card-body bg-light margin1050">
         <h3 class="font-weight-bold">일반회원</h3>
-        <form name="joinfrm">
+        <form name="joinfrm" id="joinfrm">
             <div class="row margin30">
                 <div class="col-11 offset-1">
                     <div class="form-group row">
@@ -39,23 +39,23 @@
                                for="name">이름</label>
                         <input type="text" name="name" id="name"
                                class="form-control col-2 border-info"
-                               readonly>
+                               readonly value="${param.name}">
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info"
                                for="jumin1">주민등록번호</label>
                         <input type="text" name="jumin1" id="jumin1"
                                class="form-control col-2 border-info"
-                               readonly>
+                               readonly value="${param.jumin1}">
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
-                        <input type="text" name="jumin2" id="jumin2"
+                        <input type="password" name="jumin2" id="jumin2"
                                class="form-control col-2 border-info"
-                               readonly>
+                               readonly value="${param.jumin2}">
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info"
-                               for="useid">아이디</label>
-                        <input type="text" name="useid" id="useid"
+                               for="newuid">아이디</label>
+                        <input type="text" name="userid" id="newuid"
                                class="form-control col-2 border-info">
                         <span class="col-form-label text-danger">
                                 &nbsp;&nbsp;6~16 자의 영문 소문자,숫자와 특수기호(_) 만 사용할 수 있습니다.
@@ -64,7 +64,7 @@
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info"
                                for="pwd">비밀번호</label>
-                        <input type="password" name="pwd" id="pwd"
+                        <input type="password" name="passwd" id="pwd"
                                class="form-control col-2 border-info">
                         <span class="col-form-label text-danger">
                                 &nbsp;&nbsp;6~16 자의 영문 대소문자,숫자 및 특수문자 사용할 수 있습니다.
@@ -110,10 +110,9 @@
                         <div class="input-group-append">
                             <span class="input-group-text igborder">@</span>
                         </div>
-                        <input type="text" name="email2" id="email2"
-                               class="form-control col-3 border-info igborder"
-                               readonly>
-                        <select id="email3" class="form-control col-2 border-info igborder">
+                        <input type="text" name="email2" id="email2" readonly
+                               class="form-control col-3 border-info igborder">
+                        <select id="email3" class="form-control col-2 border-info">
                             <option>선택하세요</option>
                             <option>naver.com</option>
                             <option>gmail.com</option>
@@ -147,13 +146,18 @@
             </div>
             <div class="row margin30">
                 <div class="col-12 text-center">
-                    <button type="button" id="checkbtn2"
+                    <button type="button" id="joinbtn"
                             class="btn btn-primary">
                         <i class="bi bi-check"></i>입력완료</button>
                     <button type="button" id="cancebtn2"
                             class="btn btn-primary">
                         <i class="bi bi-x"></i>취소하기</button>
                 </div> <!-- 버튼들-->
+
+                <input type="hidden" name="jumin" id="jumin">
+                <input type="hidden" name="zipcode" id="zipcode">
+                <input type="hidden" name="email" id="email">
+                <input type="hidden" name="phone" id="phone">
             </div>
         </form>
 

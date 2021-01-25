@@ -34,8 +34,8 @@
             <div class="row">
                 <div class="col-5 offset-1">
                     <div class="form-group row">
-                        <label for="name" class="col-4 col-form-label text-danger">이름</label>
-                        <input type="text" id="name" name="name"
+                        <label for="name2" class="col-4 col-form-label text-danger">이름</label>
+                        <input type="text" id="name2" name2="name2"
                                class="form-control col-6 border-danger">
                     </div>
                     <div class="form-group row">
@@ -84,7 +84,7 @@
                     <button type="button" id="checkbtn"
                             class="btn btn-primary">
                         <i class="bi bi-check"></i>확인하기</button>
-                    <button type="button" id="cancebtn"
+                    <button type="button" id="cancelbtn"
                             class="btn btn-danger">
                         <i class="bi bi-x"></i>취소하기</button>
                 </div>
@@ -99,7 +99,7 @@
                 <div class="col-5 offset-1">
                     <div class="form-group row">
                         <label for="name2" class="col-4 col-form-label text-warning">이름</label>
-                        <input type="text" id="name2" name="name2"
+                        <input type="text" id="name" name="name"
                                class="form-control col-6 border-warning">
                     </div>
                     <div class="form-group row">
@@ -138,7 +138,7 @@
                     <button type="button" id="checkbtn2"
                             class="btn btn-primary">
                         <i class="bi bi-check"></i>확인하기</button>
-                    <button type="button" id="cancebtn2"
+                    <button type="button" id="cancelbtn2"
                             class="btn btn-primary">
                         <i class="bi bi-x"></i>취소하기</button>
                 </div>
