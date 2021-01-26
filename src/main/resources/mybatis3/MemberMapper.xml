@@ -9,6 +9,15 @@
         values (#{name},#{jumin},#{userid},#{passwd},#{zipcode},#{addr1},#{addr2},#{email},#{phone});
     </insert>
 
+    <select id="zipcode" statementType="PREPARED"
+            parameterType="String" resultType="qkfns.spring.mvc.vo.ZipcodeVO">
+        select * from zipcode_2013 where dong like #{mydong};
+    </select>
+
+    <select id="checkuid" statementType="PREPARED"
+            parameterType="String" resultType="int">
+        select count(userid) cnt from Member where userid = #{uid}
+    </select>
 
 
 </mapper>
