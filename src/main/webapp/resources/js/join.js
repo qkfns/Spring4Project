@@ -43,12 +43,18 @@ $('#joinbtn').on('click', function (){
              $('#email2').val() == "") alert('이메일을 입력하세요!!');
     else if ($('#hp2').val() == "" ||
             $('#hp3').val() == "") alert('전화번호를 입력하세요!!');
+    else if ( grecaptcha.getResponse() == "")
+        alert("자동가입방지 확인 필요!");
     else {
             //분리된 데이터 합치기
             $('#jumin').val( $('#jumin1').val() + '-' + $('#jumin2').val() );
             $('#zipcode').val( $('#zip1').val() + '-' + $('#zip2').val() );
             $('#email').val( $('#email1').val() + '@' + $('#email2').val() );
             $('#phone').val( $('#hp1').val() + '-' + $('#hp2').val() + '-' + $('#hp3').val() );
+
+            // recaptcha 코드 유효성 검사를 위한 변수값 설정
+            $('#g-recaptcha').val( grecaptcha.getResponse() )
+
 
             $('#joinfrm').attr('action', '/join/joinme');
             $('#joinfrm').attr('method', 'post');
@@ -166,5 +172,10 @@ function checkuid() {
             alert(xhr.status, + "/" + error);
         }) // 비동기 요청 실패시
 }
+
+// joinok
+$('#go2index').on('click', function() {
+    location.href='/index';
+})
 
 

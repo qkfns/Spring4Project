@@ -13,13 +13,13 @@
                     <div class="form-group row text-center">
                         <label for="userid"
                                class="col-form-label col-4">아이디</label>
-                        <input type="text" id="userid"
+                        <input type="text" id="userid" name="userid"
                                class="form-control col-6">
                     </div>
                     <div class="form-group row text-center">
                         <label for="passwd"
                                class="col-form-label col-4">비밀번호</label>
-                        <input type="password" id="passwd"
+                        <input type="password" id="passwd" name="passwd"
                                class="form-control col-6">
                     </div>
                     <div class="form-group row">
@@ -34,7 +34,7 @@
                 </form>
             </div><!-- 본문 -->
             <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-danger">로그인</button>
+                <button type="button" class="btn btn-danger" id="loginbtn">로그인</button>
                 <button type="button" class="btn btn-success">
                     아이디/비밀번호찾기</button>
             </div><!-- 푸터 -->

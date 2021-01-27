@@ -1,4 +1,8 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <div id="main margin30">
     <div class="margin30">
         <h3><i class="bi bi-people-fill"></i> 회원가입</h3>
@@ -83,10 +87,12 @@
                         <label class="col-2 col-form-label text-info"
                                for="zip1">우편번호</label>
                         <input type="text" name="zip1" id="zip1" readonly
-                               class="form-control col-1 border-info">
+                               class="form-control col-1 border-info"
+                               value="${fn:split(mvo.zipcode,'-')[0]}">
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
                         <input type="text" name="zip2" id="zip2" readonly
-                               class="form-control col-1 border-info">
+                               class="form-control col-1 border-info"
+                               value="${fn:split(mvo.zipcode,'-')[1]}">
                         <span class="">
                                 &nbsp;&nbsp;<button type="button" class="btn btn-dark"
                                                     data-toggle="modal" data-target="#zipmodal">
@@ -96,9 +102,10 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info"
-                               for="email1">주소</label>
+                               for="addr1">주소</label>
                         <input type="text" name="addr1" id="addr1"
-                               class="form-control col-4 border-info">
+                               class="form-control col-4 border-info"
+                               value="${mvo.addr1}">
                         <input type="text" name="addr2" id="addr2"
                                class="form-control col-4 border-info">
                     </div>
@@ -106,12 +113,14 @@
                         <label class="col-2 col-form-label text-info"
                                for="email1">이메일</label>
                         <input type="text" name="email1" id="email1"
-                               class="form-control col-3 border-info igborder">
+                               class="form-control col-3 border-info igborder"
+                               value="${fn:split(mvo.email,'@')[0]}">
                         <div class="input-group-append">
                             <span class="input-group-text igborder">@</span>
                         </div>
                         <input type="text" name="email2" id="email2" readonly
-                               class="form-control col-3 border-info igborder">
+                               class="form-control col-3 border-info igborder"
+                               value="${fn:split(mvo.email,'@')[1]}">
                         <select id="email3" name="email3" class="form-control col-2 border-info">
                             <option>선택하세요</option>
                             <option value="naver.com">naver.com</option>
@@ -133,14 +142,19 @@
                         </select>
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
                         <input type="text" name="hp2" id="hp2"
-                               class="form-control col-1 border-info">
+                               class="form-control col-1 border-info"
+                               value="${fn:split(mvo.phone,'-')[1]}">
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
                         <input type="text" name="hp3" id="hp3"
-                               class="form-control col-1 border-info">
+                               class="form-control col-1 border-info"
+                               value="${fn:split(mvo.phone,'-')[2]}">
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info">자동가입방지</label>
-                        <img src="/img/google_recaptcha.gif" width="35%" height="35%">
+                        <div class="g-recaptcha"
+                            data-sitekey="6Le-1joaAAAAAG3k_KWFStnIB8QYyKD6vEdlecXD"></div>
+                        <input type="hidden" name="g-recaptcha" id="g-recaptcha">
+                        <spna style="color:red">${checkCaptcha}</spna>
                     </div>
                 </div>
             </div>

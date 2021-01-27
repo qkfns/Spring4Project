@@ -1,21 +1,35 @@
 package qkfns.spring.mvc.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import qkfns.spring.mvc.service.MemberService;
+import qkfns.spring.mvc.util.GoogleCaptchaUtil;
 import qkfns.spring.mvc.vo.MemberVO;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @Controller
 public class JoinController {
 
-    @Autowired
+    //@Autowired
+    //private MemberService msrv;
+    //@Autowired
+    //private GoogleCaptchaUtill gcutil;
+
     private MemberService msrv;
+    private GoogleCaptchaUtil gcutil;
+
+    public JoinController(MemberService msrv, GoogleCaptchaUtil gcutil) {
+        this.msrv = msrv;
+        this.gcutil = gcutil;
+    }
+
 
     @GetMapping("/join/agree")
     public String agree() {
@@ -31,11 +45,48 @@ public class JoinController {
         return "join/joinme.tiles";
     }
 
-    @PostMapping("/join/joinme")  // 회원가입처리
-    public String joinmeok(MemberVO mvo) {
-        System.out.println(msrv.newMember(mvo));
 
-        return "redirect:/join/joinok";
+    // 회원가입시 입력한 정보는 MemberVO객체 저장됨
+    // 하지만, 클라이언트에서 회원정보와 상관없는 데이터를 보낸 경우
+    // HttpServletRequest 객체를 이용해서 처리함
+    // 물론, MemberVO 객체에 같이 정의해서 사용해도 됨됨
+
+    // Model/ModelAttribute/ModelAndView
+    // 뷰에 사용자 데이터를 보내고 싶을때 사용하는 객체들
+    // 단, 데이터는 request 객체에 1회성으로 저장됨
+
+    // RedirectAttribute
+    // 리다이렉트된 뷰에 사용자 데이터를 보내고 싶을때 사용하는 객체
+    // 단, 데이터는 session 객체에 1회성으로 저장됨
+    @PostMapping("/join/joinme")  // 회원가입처리
+    public String joinmeok(MemberVO mvo,
+                           HttpServletRequest req,
+                           RedirectAttributes rds) throws UnsupportedEncodingException {
+
+        // 질의문자열에 한글을 포함시키려면
+        // 반드시 URLncoder를 이용해서 한글에 대한 적절한 인코딩이 필요!
+        String param = "?name=" + URLEncoder.encode(mvo.getName(),"UTF-8");
+        param += "&jumin1=" + mvo.getJumin().split("-")[0];
+        param += "&jumin2=" + mvo.getJumin().split("-")[1];
+        String returnPage = "redirect:/join/joinme" + param;
+
+        // 클라이언트에서 생성한 captcha 코드를 가져옴
+        String gCaptcha = req.getParameter("g-recaptcha");
+
+        // captcha코드의 유효성을 확인함
+        // 결과 : true => 테이블에 회원정보 저장, /join/joinok 이동
+        // 결과 : false => /join/joinme 이동
+        if (gcutil.checkCaptcha(gCaptcha)){
+           msrv.newMember(mvo);
+           returnPage = "redirect:/join/joinok";
+        } else{
+           rds.addFlashAttribute("checkCaptcha","자동가입방지 확인이 실패했어요!!");
+           rds.addFlashAttribute("mvo",mvo);
+        }
+
+        //System.out.println(msrv.newMember(mvo));
+
+        return returnPage;
     }
 
     @GetMapping("/join/joinok")

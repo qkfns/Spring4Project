@@ -27,5 +27,12 @@ public class MemberDAOImpl implements MemberDAO{
     @Override // 아이디 중복조회
     public int selectOneUserid(String uid) {
         return sqlSession.selectOne("member.checkuid",uid);
-    };
+    }
+
+    @Override
+    public int selectLogin(MemberVO mvo) {
+        return sqlSession.selectOne("member.checklogin",mvo);
+    }
+
+    ;
 }

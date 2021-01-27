@@ -19,5 +19,10 @@
         select count(userid) cnt from Member where userid = #{uid}
     </select>
 
+    <select id="checklogin" statementType="PREPARED"
+            parameterType="qkfns.spring.mvc.vo.MemberVO" resultType="int">
+        select count(userid) cnt from Member where userid = #{userid} and passwd= #{passwd}
+    </select>
+
 
 </mapper>
