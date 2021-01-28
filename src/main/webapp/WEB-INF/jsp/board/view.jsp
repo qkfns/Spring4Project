@@ -1,4 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <div id="main">
         <div class="margin30">
             <h3><i class="bi bi-chat-dots-fill bidragup"></i> 게시판</h3>
@@ -22,17 +24,11 @@
         </div> <!-- 버튼들 -->
         <div class="row margin1050 ">
             <table class="table tblines">
-                <tr><th colspan="2" class="tblines2 tbbg1"><h2>Praesent quis magna vitae nuc malesuada tempor a pretium metus</h2></th></tr> <!-- 제목 -->
-                <tr class="tbbg2"><td>qkfns</td><td class="text-right">2021.01.25 12:12:12 / 45 / 256</td></tr> <!-- 작성자,작성일,조회수 -->
+                <tr><th colspan="2" class="tblines2 tbbg1">
+                    <h2>${bd.title}</h2></th></tr> <!-- 제목 -->
+                <tr class="tbbg2"><td>${bd.userid}</td><td class="text-right">${bd.regdate} / ${bd.thumbs} / ${bd.views}</td></tr> <!-- 작성자,작성일,조회수 -->
                 <tr class="tbbg3"><td colspan="2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                    Nam sagittis feugiat sapien id convallis.<br>
-                    Vestibulum pulvinar urna felis, eu suscipit mauris semper quis.<br>
-                    Morbi malesuada risus in tempus eleifend.<br>
-                    In sed maximus nisi, a vestibulum elit. Mauris id dolor quam.<br>
-                    Donec imperdiet laoreet tortor sed interdum.<br>
-                    Nulla accumsan eros et purus pharetra, in egestas massa dignissim.<br>
-                    Sed sit amet erat ornare dui molestie auctor nec sed nisl.
+                    ${bd.contents}
                 </td></tr> <!-- 본문 -->
             </table>
         </div> <!-- 본문글 -->

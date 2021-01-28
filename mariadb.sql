@@ -16,3 +16,35 @@ create table Member (
 -- CRUD
 insert into Member (name, jumin, userid, passwd, zipcode, addr1, addr2, email, phone)
 values (?,?,?,?,?,?,?,?,?);
+
+-- board
+create table Board (
+    bno int primary key  auto_increment,
+    title varchar (100) not null,
+    userid varchar(16) not null,
+    regdate timestamp default current_timestamp,
+    views int default 0,
+    thumbs int default 0,
+    contents text not null
+
+);
+
+-- crud
+
+insert into Board(title, userid, contents) values ('제곧내','qkfns','아잉~ 냉무라니깐요~');
+
+select bno,title,userid,regdate,thumbs,views
+from Board
+order by bno desc;
+
+select *
+from Board
+where bno = 1;
+
+update Board
+set title = '~', contents = '~', regdate = current_timestamp
+where bno = 1;
+
+delete
+from Board
+where bno = 1;

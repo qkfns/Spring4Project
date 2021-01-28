@@ -29,7 +29,7 @@
                 </div>
                 <div class="row">
                     <label class="col-2 text-right">자동가입방지</label>
-                    <img src="/resources/img/google_recaptcha.gif" width="40%" height="40%" style="margin-left: -5px">
+                    <img src="/img/google_recaptcha.gif" width="40%" height="40%" style="margin-left: -5px">
                 </div>
             </div> <!-- 새글쓰기 폼 -->
             <div class="row">

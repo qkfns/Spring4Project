@@ -1,5 +1,6 @@
 package qkfns.spring.mvc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class JoinController {
     private MemberService msrv;
     private GoogleCaptchaUtil gcutil;
 
+    @Autowired
     public JoinController(MemberService msrv, GoogleCaptchaUtil gcutil) {
         this.msrv = msrv;
         this.gcutil = gcutil;

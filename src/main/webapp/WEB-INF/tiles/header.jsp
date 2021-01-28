@@ -3,7 +3,7 @@
 
 <header class="row">
     <div class="col-6">
-        <h1><a href="index.html">Lorem Inpsum</a></h1>
+        <h1><a href="/index">Lorem Inpsum</a></h1>
     </div>
     <div class="col-6 text-right">
         <%-- 세션변수 UID에 값이 존재하지 않는다면 --%>
