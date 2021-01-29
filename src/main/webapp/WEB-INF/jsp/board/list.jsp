@@ -16,6 +16,7 @@
     endPage = startPage + 9
 --%>
 
+
 <fmt:parseNumber var="cp" value="${param.cp}"/>
 <fmt:parseNumber var="pp" value="10"/>
 <fmt:parseNumber var="bdcnt" value="${bdnct}"/>
@@ -38,8 +39,10 @@
         </div>
         <div class="row margin1050">
             <div class="col-12 text-right">
-                <button type="button" id="newbd"
-                        class="btn btn-info"><i class="bi bi-plus-circle"></i> 새글쓰기</button>
+                <c:if test="${not empty UID}">
+                    <button type="button" id="newbd"
+                            class="btn btn-info"><i class="bi bi-plus-circle"></i> 새글쓰기</button>
+                </c:if>
             </div>
         </div>
         <div class="row margin1050">
@@ -66,7 +69,7 @@
 
                         <c:forEach var="b" items="${bds}">
                         <tr><td>${b.bno}</td>
-                            <td><a href="/board/view?bno=${b.bno}">${b.title}</a></td>
+                            <td><a href="/board/view?bno=${b.bno}&cp=${cp}">${b.title}</a></td>
                             <td>${b.userid}</td>
                             <td>${fn:substring(b.regdate,0,10)}</td>
                             <td>${b.thumbs}</td>

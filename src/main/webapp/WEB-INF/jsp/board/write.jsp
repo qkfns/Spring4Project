@@ -1,4 +1,10 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%-- 로그인하지 않았으면 list페이지 강제전환--%>
+<c:if test="${empty UID}">
+    <c:redirect url="/board/list?cp=1"/>
+</c:if>
+
     <div id="main">
         <div class="margin30">
             <h3><i class="bi bi-chat-dots-fill bidragup"></i> 게시판</h3>
@@ -23,9 +29,9 @@
 
                 </div>
                 <div class="form-group row">
-                    <label for="uid" class="col-form-label col-2 text-right">본문내용</label>
-                    <textarea type="text" id="uid" name="userid"
-                              class="form-control col-9" readonly></textarea>
+                    <label for="uid" class="col-form-label col-2 text-right">작성자</label>
+                    <input type="text" id="uid" name="userid"
+                              class="form-control col-9" readonly value="${UID}">
                 </div>
                 <div class="form-group row">
                     <label for="contents" class="col-form-label col-2 text-right">본문내용</label>

@@ -44,4 +44,10 @@
         from Board;
     </select>
 
+    <select id="viewCount" statementType="PREPARED"
+            parameterType="String">
+        update Board set views = views + 1
+        where bno = #{bno}
+    </select>
+
 </mapper>
