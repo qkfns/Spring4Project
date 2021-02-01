@@ -80,37 +80,30 @@
         <div class="row margin1050">
             <h3><i class="bi bi-chat-square-dots-fill bidragup"></i> 나도 한마디</h3>
             <table class="table tblines tbwide">
-                <tr><td><h4>qkfns</h4></td>
-                    <td>
-                        <div class="cmtbg1">2021-01-30 15:15:15</div>
-                        <p>Morbi malesuada risus in tempus eleifend.<br>
-                            In sed maximus nisi, a vestibulum elit. Mauris id dolor quam.<br></p><!-- 댓글 -->
-                        <ul class="list-unstyled">
-                            <li>
-                                <div class="cmtbg2"><span class="h4">zzyzzy</span><span class="pushright">2021-01-30 16:16:16</span></div>
-                                <p>Nulla accumsan eros et purus pharetra, in egestas massa dignissim.<br>
-                                    Sed sit amet erat ornare dui molestie auctor nec sed nisl.</p>
-                            </li>
-                        </ul> <!-- 댓글의 댓글 -->
-                    </td></tr>
-                <tr><td><h4>qkfns</h4></td>
-                    <td>
-                        <div class="cmtbg1">2021-01-30 15:15:15</div>
-                        <p>Morbi malesuada risus in tempus eleifend.<br>
-                            In sed maximus nisi, a vestibulum elit. Mauris id dolor quam.<br></p><!-- 댓글 -->
-                    </td></tr>
-                <tr><td><h4>qkfns</h4></td>
-                    <td>
-                        <div class="cmtbg1">2021-01-30 15:15:15</div>
-                        <p>Morbi malesuada risus in tempus eleifend.<br>
-                            In sed maximus nisi, a vestibulum elit. Mauris id dolor quam.<br></p><!-- 댓글 -->
-                    </td></tr>
-                <tr><td><h4>qkfns</h4></td>
-                    <td>
-                        <div class="cmtbg1">2021-01-30 15:15:15</div>
-                        <p>Morbi malesuada risus in tempus eleifend.<br>
-                            In sed maximus nisi, a vestibulum elit. Mauris id dolor quam.<br></p><!-- 댓글 -->
-                    </td></tr>
+                <c:forEach var="r" items="${rp}">
+                    <c:if test="${r.rno eq r.cno}">
+                        <tr><td><h4>${r.userid}</h4></td>
+                            <td>
+                                <div class="cmtbg1">${r.regdate}</div>
+                                <p>${r.reply}<br>
+                                </p><!-- 댓글 -->
+
+                            </td>
+                        </tr>
+                    </c:if>
+                    <c:if test="${r.rno ne r.cno}">
+                        <tr><td></td>
+                            <td>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <div class="cmtbg2"><span class="h4">${r.userid}</span><span class="pushright">${r.regdate}</span></div>
+                                        <p>${r.reply}</p>
+                                    </li>
+                                </ul> <!-- 댓글의 댓글 -->
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
 
             </table>
         </div> <!-- 댓글목록 -->
@@ -118,10 +111,12 @@
             <form id="replyfrm" class="card card-body bg-light">
                 <div class="form-group row justify-content-center">
                     <label class="pushtop50 text-primary font-weight-bold">로그인하세요</label>&nbsp;
-                    <textarea id="comment" rows="5" class="form-control col-7"></textarea>&nbsp;
-                    <span><button id="bdcmtbtn" class="btn btn-dark pushtop50">
+                    <textarea id="reply" name="reply" rows="5" class="form-control col-7"></textarea>&nbsp;
+                    <span><button type="button" id="bdcmtbtn" class="btn btn-dark pushtop50">
                         <i class="bi bi-chat-text-fill bidragup"></i> 댓글쓰기</button></span>
                 </div>
+                <input type="hidden" name="bno" value="${param.bno}">
+                <input type="hidden" name="userid" id="uid" value="${UID}">
             </form>
         </div> <!-- 댓글폼 -->
 

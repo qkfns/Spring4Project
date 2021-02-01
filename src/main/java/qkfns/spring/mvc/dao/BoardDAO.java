@@ -3,6 +3,7 @@ package qkfns.spring.mvc.dao;
 import qkfns.spring.mvc.vo.BoardVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BoardDAO {
     int insertBoard(BoardVO bvo);
@@ -14,4 +15,8 @@ public interface BoardDAO {
     int selectCountBoard();
 
     int updateViewCount(String bno);
+
+    List<BoardVO> findSelectList(Map<String, Object> param);
+
+    int selectCountBoard(Map<String, String> param);
 }

@@ -65,5 +65,9 @@
     <Logger name="org.springframework.jdbc.core.StatementCreatorUtils"
             level="trace" />
 
+    <Logger name="qkfns.spring.mvc.*" additivity="false">
+            <AppenderRef ref="console" level="info"/>
+    </Logger>>
+
     </Loggers>
 </Configuration>

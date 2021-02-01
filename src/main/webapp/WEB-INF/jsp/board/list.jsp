@@ -31,6 +31,13 @@
     <fmt:parseNumber var="tp" value="${tp+1}" />
 </c:if>
 
+<%-- 검색 여부에 따라 네비게이션 링크 출력을 다르게 함 --%>
+<%--일반 목록 출력 : /board/list?cp=--%>
+<%--검색 후 목록 출력 : /board/find?findtype=???&findkey=???&cp=?? --%>
+<c:set var="navlnk" value="/board/list?cp="/>
+<c:if test="${not empty param.findkey}">
+    <c:set var="navlnk" value="/board/find?findtype=${param.findtype}&findkey=${param.findkey}&cp="/>
+</c:if>
 
     <div id="main">
         <div class="margin30">
@@ -38,7 +45,20 @@
             <hr>
         </div>
         <div class="row margin1050">
-            <div class="col-12 text-right">
+            <div class="col-6">
+                <div class="form-group row">
+                    <select name="findtype" id="findtype" class="form-control col-4">
+                        <option value="title">제목</option>
+                        <option value="ticon">제목 + 내용</option>
+                        <option value="contents">내용</option>
+                        <option value="userid">작성자</option>
+                    </select>&nbsp;
+                    <input type="text" name="findkey" id="findkey" class="form-control col-5">
+                    &nbsp;<button type="button" id="bdfindbtn" class="btn btn-dark">
+                    <i class="bi bisearch"> </i>검색</button>
+                </div>
+            </div>
+            <div class="col-6 text-right">
                 <c:if test="${not empty UID}">
                     <button type="button" id="newbd"
                             class="btn btn-info"><i class="bi bi-plus-circle"></i> 새글쓰기</button>
@@ -86,24 +106,24 @@
                     <%-- '이전'이 표시되어야 할때는  sp > 10 --%>
                     <c:if test="${cp gt 10}">
                         <li class="page-item">
-                        <a href="/board/list?cp=${sp-10}" class="page-link">이전</a></li>
+                        <a href="${navlnk}${sp-10}" class="page-link">이전</a></li>
                     </c:if>
 
                     <c:forEach var="i" begin="${sp}" end="${ep}" step="1">
                         <c:if test="${i le tp}">
                             <c:if test="${i ne cp}">
                                 <li class="page-item">
-                                    <a href="/board/list?cp=${i}" class="page-link font-weight-bold">${i}</a></li>
+                                    <a href="${navlnk}${i}" class="page-link font-weight-bold">${i}</a></li>
                             </c:if>
                             <c:if test="${i eq cp}">
                                 <li class="page-item active">
-                                    <a href="/board/list?cp=${i}" class="page-link font-weight-bold">${i}</a></li>
+                                    <a href="${navlnk}${i}" class="page-link font-weight-bold">${i}</a></li>
                             </c:if>
                         </c:if>
                     </c:forEach>
 
                     <c:if test="${ep lt tp}">
-                    <li class="page-item"><a href="/board/list?cp=${sp+10}" class="page-link">다음</a></li>
+                    <li class="page-item"><a href="${navlnk}${sp+10}" class="page-link">다음</a></li>
                     </c:if>
                 </ul>
             </div>

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import qkfns.spring.mvc.dao.BoardDAO;
 import qkfns.spring.mvc.vo.BoardVO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("bsrv")
 public class BoardServiceImpl implements BoardService{
@@ -31,6 +33,19 @@ public class BoardServiceImpl implements BoardService{
         int snum = (Integer.parseInt(cp)-1) * 10;
 
         return bdao.selectBoard(snum);
+    }
+
+
+    @Override
+    public List<BoardVO> readBoard(String cp, String findtype, String findkey) {
+        Map<String, Object> param = new HashMap<>();
+
+        int snum = (Integer.parseInt(cp) - 1) * 10;
+        param.put("snum", snum);
+        param.put("findType", findtype);
+        param.put("findKey", findkey);
+
+        return bdao.findSelectList(param);
     }
 
     @Override  // 본문보기
@@ -61,6 +76,17 @@ public class BoardServiceImpl implements BoardService{
         return bdao.selectCountBoard();
     }
 
+
+    @Override
+    public int countBoard(String findtype, String findkey) {
+        Map<String, String> param= new HashMap<>();
+
+        param.put("findType", findtype);
+        param.put("findKey", findkey);
+
+        return bdao.selectCountBoard(param);
+    }
+
     @Override
     public boolean viewCountBoard(String bno){
         boolean isOk = false;
@@ -68,5 +94,7 @@ public class BoardServiceImpl implements BoardService{
         if(cnt >0) isOk = true;
         return isOk;
     }
+
+
 
 }

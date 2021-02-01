@@ -5,10 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import qkfns.spring.mvc.dao.BoardReplyDAO;
 import qkfns.spring.mvc.service.BoardReplyService;
 import qkfns.spring.mvc.service.BoardService;
 import qkfns.spring.mvc.util.GoogleCaptchaUtil;
 import qkfns.spring.mvc.vo.BoardVO;
+import qkfns.spring.mvc.vo.ReplyVO;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +23,7 @@ public class BoardController {
     private BoardReplyService brsrv;
 
     @Autowired
-    public BoardController(BoardService bsrv, GoogleCaptchaUtil gcutil) {
+    public BoardController(BoardService bsrv, GoogleCaptchaUtil gcutil, BoardReplyService brsrv) {
         this.bsrv = bsrv;
         this.gcutil = gcutil;
         this.brsrv = brsrv;
@@ -60,6 +62,8 @@ public class BoardController {
         mv.setViewName("board/view.tiles");
 
         mv.addObject("bd",bsrv.readOneBoard(bno));
+        mv.addObject("rp",brsrv.readReply(bno));
+
         bsrv.viewCountBoard(bno);               // 조회수 증가
 
         return mv;
@@ -126,6 +130,27 @@ public class BoardController {
             bsrv.removeBoard(bno);
 
         return "redirect:/board/list?cp=" + cp;
+    }
+
+
+    @GetMapping("/board/find") // 검색기능
+    // 게시물 검색기능을 위한 url 호출방법 : /board/find?findtype=title&findkey=기생충&cp=2
+    public ModelAndView find(ModelAndView mv, String cp,
+                             String findtype, String findkey) {
+
+        mv.setViewName("board/list.tiles");
+        mv.addObject("bds", bsrv.readBoard(cp,findtype,findkey));
+        mv.addObject("bdcnt",bsrv.countBoard(findtype, findkey));
+
+        return mv;
+    }
+    @PostMapping("board/replyok") // 댓글쓰기
+    public String replyok(ReplyVO rvo) {
+        String returnPage = "redirect:/board/view?bno="+rvo.getBno();
+
+        brsrv.newReply(rvo);
+
+        return returnPage;
     }
 
 }
