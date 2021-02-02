@@ -16,6 +16,15 @@
     endPage = startPage + 9
 --%>
 
+<%--
+    // 글번호 재조정
+    // 총 게시물 수 : 150, 페이지당 게시물 수 : 10
+    // page 1 : 150~141
+    // page 2 : 140~131
+    // page 3 : 130~121
+    //  ...
+    // page n : snum = total - (n - 1) * 10
+--%>
 
 <fmt:parseNumber var="cp" value="${param.cp}"/>
 <fmt:parseNumber var="pp" value="10"/>
@@ -31,6 +40,9 @@
     <fmt:parseNumber var="tp" value="${tp+1}" />
 </c:if>
 
+<fmt:parseNumber var="snum" integerOnly="true"
+                 value="${bdcnt - (cp - 1) * pp}" />
+
 <%-- 검색 여부에 따라 네비게이션 링크 출력을 다르게 함 --%>
 <%--일반 목록 출력 : /board/list?cp=--%>
 <%--검색 후 목록 출력 : /board/find?findtype=???&findkey=???&cp=?? --%>
@@ -44,26 +56,27 @@
             <h3><i class="bi bi-chat-dots-fill bidragup"></i> 게시판</h3>
             <hr>
         </div>
+
         <div class="row margin1050">
-            <div class="col-6">
-                <div class="form-group row">
-                    <select name="findtype" id="findtype" class="form-control col-4">
-                        <option value="title">제목</option>
-                        <option value="ticon">제목 + 내용</option>
-                        <option value="contents">내용</option>
-                        <option value="userid">작성자</option>
-                    </select>&nbsp;
-                    <input type="text" name="findkey" id="findkey" class="form-control col-5">
-                    &nbsp;<button type="button" id="bdfindbtn" class="btn btn-dark">
-                    <i class="bi bisearch"> </i>검색</button>
+            <c:if test="${not empty UID}">
+                <div class="col-6">
+                    <div class="form-group row">
+                        <select name="findtype" id="findtype" class="form-control col-4">
+                            <option value="title">제목</option>
+                            <option value="ticon">제목 + 내용</option>
+                            <option value="contents">내용</option>
+                            <option value="userid">작성자</option>
+                        </select>&nbsp;
+                        <input type="text" name="findkey" id="findkey" class="form-control col-5">
+                        &nbsp;<button type="button" id="bdfindbtn" class="btn btn-dark">
+                        <i class="bi bisearch"> </i>검색</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6 text-right">
-                <c:if test="${not empty UID}">
+                <div class="col-6 text-right">
                     <button type="button" id="newbd"
                             class="btn btn-info"><i class="bi bi-plus-circle"></i> 새글쓰기</button>
-                </c:if>
-            </div>
+                </div>
+            </c:if>
         </div>
         <div class="row margin1050">
             <div class="col-12">
@@ -88,12 +101,13 @@
                             <th>128</th></tr>
 
                         <c:forEach var="b" items="${bds}">
-                        <tr><td>${b.bno}</td>
+                        <tr><td>${snum}</td>
                             <td><a href="/board/view?bno=${b.bno}&cp=${cp}">${b.title}</a></td>
                             <td>${b.userid}</td>
                             <td>${fn:substring(b.regdate,0,10)}</td>
                             <td>${b.thumbs}</td>
                             <td>${b.views}</td></tr>
+                            <c:set var="snum" value="${snum -1 }"/>
                         </c:forEach>
 
                     </tbody>

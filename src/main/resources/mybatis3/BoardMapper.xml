@@ -25,18 +25,18 @@
 
     </select>
 
-    <select id="updateBoard" statementType="PREPARED"
+    <update id="updateBoard" statementType="PREPARED"
         parameterType="qkfns.spring.mvc.vo.BoardVO">
         update Board
         set title = #{title}, contents = #{contents}, regdate = current_timestamp
         where bno = #{bno};
-    </select>
-    <select id="deleteBoard" statementType="PREPARED"
-        parameterType="qkfns.spring.mvc.vo.BoardVO">
+    </update>
+    <delete id="deleteBoard" statementType="PREPARED"
+        parameterType="String">
         delete
         from Board
         where bno = #{bno};
-    </select>
+    </delete>
 
     <select id="countBoard" statementType="PREPARED"
             resultType="int">

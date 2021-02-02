@@ -9,4 +9,6 @@ public interface BoardReplyDAO {
 
 
     int insertReply(ReplyVO rvo);
+
+    int insertReReply(ReplyVO rvo);
 }

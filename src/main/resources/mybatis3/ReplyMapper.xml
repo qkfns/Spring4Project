@@ -23,5 +23,12 @@
 
     </select>
 
+    <insert id="insertReply2" statementType="PREPARED"
+            parameterType="qkfns.spring.mvc.vo.ReplyVO">
+        insert into Reply (cno, bno, userid, reply) value
+            ((select auto_increment from information_schema.TABLES
+              where TABLE_NAME = 'Reply'), #{bno}, #{userid}, #{reply})
+    </insert>
+
 
 </mapper>
