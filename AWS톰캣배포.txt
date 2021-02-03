@@ -15,3 +15,9 @@ winscp를 이용해서 tomcat/webapp에 업로드함
 
 3. 브라우져로 확인
 http://aws서버주소:8080/프로젝트명
+
+1-1 스프링 MVC 프로젝트 그대로 웹서버로 올리기
+Build => builds Artifacts => 프로젝트명: war exploded
+=> action 메뉴에서 Build 선택
+프로젝트 창의 target 디렉토리 아래에 프로젝트명과 동일 이름의 폴더내
+모든 파일/폴더를 톰캣서버의 webapps/ROOT 아래로 업로드함
