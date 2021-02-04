@@ -1,7 +1,6 @@
 package qkfns.spring.mvc.service;
 
 
-import qkfns.spring.mvc.vo.BoardVO;
 import qkfns.spring.mvc.vo.PdsVO;
 
 import java.util.List;
@@ -17,4 +16,6 @@ public interface PdsService {
     PdsVO readOnePds(String pno);
 
     PdsVO readOneFname(String pno, String order);
+
+    boolean downCountPds(String pno, String order);
 }

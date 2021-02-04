@@ -14,8 +14,7 @@ import java.util.Date;
 public class ImageUploadUtil {
 
     // 이미지 업로드 경로 설정
-    private String IMG_UPLOAD_PATH =
-            "C:/Java/nginx-1.18.0/html/cdn/";
+    private String IMG_UPLOAD_PATH = "D:/Java/nginx-1.19.6/html/cdn/";
 
     // 갤러리에 이미지 첨부시 파일 존재 여부 확인
     public boolean checkGalleryFiles(MultipartFile[] img) {

@@ -149,3 +149,27 @@ from Pds
 order by pno desc;
 
 select * from Pds where pno = ?;
+
+-- gallery
+create table Gallery (
+                     gno int primary key  auto_increment,
+                     title varchar (100) not null,
+                     userid varchar(16) not null,
+                     regdate timestamp default current_timestamp,
+                     views int default 0,
+                     thumbs int default 0,
+                     contents text not null,
+                     fnames varchar(1000),
+                     fsizes varchar(1000),
+                     uuid varchar(20)
+
+);
+
+-- CRUD
+insert into Gallery (title, userid, contents, fnames, fsizes, uuid)
+values ();
+
+select gno, title, userid, regdate, views, thumbs from Gallery
+order by gno desc;
+
+select * from Gallery where gno = ?;

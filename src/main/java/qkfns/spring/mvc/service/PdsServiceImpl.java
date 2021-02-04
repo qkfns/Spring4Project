@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import qkfns.spring.mvc.dao.PdsDAO;
 import qkfns.spring.mvc.vo.PdsVO;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,17 @@ public class PdsServiceImpl implements PdsService{
         return pdao.selectOnePds(pno,order);
     }
 
+    @Override
+    public boolean downCountPds(String pno, String order) {
+        Map<String, String> param = new HashMap<>();
+        param.put("pno", pno);
+        param.put("order", "fdown" + order);
+
+        int cnt = pdao.updateDownCount(param);
+
+        return true;
+    }
+
     // 폼데이터를 PdsVO에 나눠 담음
     // title : 제목
     // userid : 작성자
@@ -67,7 +79,7 @@ public class PdsServiceImpl implements PdsService{
                 case "file1type": p.setFtype1(val); break;
                 case "file2": p.setFname2(val); break;
                 case "file2size": p.setFsize2(val); break;
-                case "file2type": p.setFname2(val); break;
+                case "file2type": p.setFtype2(val); break;
                 case "file3": p.setFname3(val); break;
                 case "file3size": p.setFsize3(val); break;
                 case "file3type": p.setFtype3(val); break;

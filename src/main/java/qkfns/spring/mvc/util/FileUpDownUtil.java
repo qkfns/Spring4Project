@@ -97,10 +97,10 @@ public class FileUpDownUtil {
 
                             // 파일 기타정보 처리
                             long fsize = item.getSize() / 1024;
-                            String ftype = fnames[1];
+                            String ftype = fnames[1].toLowerCase();
 
-                            frmdata.put(name+"size", fsize+"");
-                            frmdata.put(name+"type", ftype);
+                            frmdata.put(name+"size", fsize+""); // 파일 크기
+                            frmdata.put(name+"type", ftype);  // 파일 확장자
 
                             // 파일명 처리 결과 확인
                             System.out.println(ufname + "/" + fname);

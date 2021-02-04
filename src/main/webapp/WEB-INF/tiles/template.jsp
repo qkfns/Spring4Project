@@ -40,6 +40,7 @@
 <script src="/js/login.js"></script>
 <script src="/js/board.js"></script>
 <script src="/js/pds.js"></script>
+<script src="/js/gallery.js"></script>
 
 
 </body>
