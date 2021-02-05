@@ -35,3 +35,98 @@ nginx 종료
 2) 명령프롬프트에서 nginx -s stop 명령 입력
 => nginx가 깔려있는 폴더까지 들어가야함
 => cd d:/java/nginx-1.19.6
+
+리눅스용 nginx 설치하기
+sudo su
+
+yum install yum-utils -y
+
+vi /etc/yum.repos.d/nginx.repo
+
+i키를 한번 누르고
+[nginx-mainline]
+name=nginx mainline repo
+baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+
+:wq로 저장하고 나감
+
+yum-config-manager --enable nginx-mainline
+
+yum install nginx -y
+
+
+nginx 환경설정
+vi   /etc/nginx/nginx.conf
+vi   /etc/nginx/conf.d/default.conf
+
+:set nu    (줄번호 표시)
+
+
+2번째 라인 80  => 전화번호 맨뒷 4자리
+5번째 라인 : # 제거 후 koi8-r을 utf-8로 변경
+7번째 라인 :
+
+    location /cdn {
+         alias   /home/centos/imgupload;
+         index  index.html index.htm;
+    }
+
+14번째 라인 : root /use/share/nginx/html;
+             를 주석처리
+
+//14번째 라인 아래 새로운 라인 추가후 :
+//    return 301 http://google.co.kr;
+
+저장하고 종료
+:wq
+
+AWS 보안그룹에 웹 포트(전화번호 맨 뒷 4자리) 추가함
+유형은 TCP
+
+새로 추가한 웹 포트(전화번호 맨 뒷 4자리)를 centos에 등록
+semanage port -a -t http_port_t -p tcp 포트번호
+semanage port -a -t http_port_t -p tcp 4417
+
+새로 추가한 웹 포트(전화번호 맨 뒷 4자리) 확인
+semanage port -l | grep http_port_t
+
+
+이미지 업로드용 디렉토리 생성
+cd /home/centos
+mkdir imgupload
+chmod 777 imgupload
+chown centos:centos imgupload
+
+
+웹서버에 의해 /home/centos/imgupload에 파일쓰기가 가능하도록 설정
+setenforce 0
+chcon -Rt httpd_sys_content_t /home/centos/imgupload
+chcon -Rt httpd_sys_rw_content_t /home/centos/imgupload
+
+
+winscp를 이용해서 웹컴용 이미지 업로드
+/home/centos/imgupload <= abc.jpg
+
+
+nginx 자동실행 설정
+systemctl enable nginx
+
+nginx 서버 가동
+systemctl start nginx
+
+외부접속 허용을 위한 EC2 방화벽 설정
+firewall-cmd --permanent --zone=public --add-port=포트번호/tcp
+firewall-cmd --permanent --zone=public --add-port=4417/tcp
+firewall-cmd --reload
+
+
+브라우저로 웰컴이미지 확인
+http://아이피주소:포트번호           => 404 not found
+http://아이피주소:포트번호/cdn       => 403 forbidden
+
+
+

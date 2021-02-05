@@ -39,7 +39,7 @@ public class ImageUploadUtil {
         String imgtype = fname.substring(fname.lastIndexOf(".")+1);
         // 썸내일 이미지 이름 설정
         String tfname = IMG_UPLOAD_PATH + "_thumb/small_"
-                                        + id + "." + imgtype;
+                + id + "_" + fname;
 
         try {
             // 원본이미지를 읽어서 메모리상에 이미지 객체(갠버스)로 만들어 둠
@@ -54,9 +54,9 @@ public class ImageUploadUtil {
                     (image.getHeight() - imgheight) / 2,
                     imgwidth, imgheight, null );
 
-            // 잘라낸 이미지를 230x200으로 재조정
+            // 잘라낸 이미지를 220x220으로 재조정
             BufferedImage resizedImg = Scalr.resize(
-                    scaledImg, 235, 200, null);
+                    scaledImg, 220, 220, null);
 
             // 재조정한 이미지를 실제경로에 저장함
             ImageIO.write(resizedImg, imgtype, new File(tfname));
@@ -84,12 +84,15 @@ public class ImageUploadUtil {
         String nfname = makeUUID() + "_" + ofname;
 
         try {
+            // 업로드한 이미지는 웹서버의 임시폴더에 저장됨
+            // 이것을 원하는 위치에 다시 옮기기 위해 transferTo 메서드 사용
             mf.transferTo(
                     new File(IMG_UPLOAD_PATH + nfname));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return nfname;
+        // 업로드한 파일명과 파일크기를 리턴함
+        return nfname + "/" + (mf.getSize()/1024);
     }
 }

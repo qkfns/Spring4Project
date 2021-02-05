@@ -27,33 +27,47 @@
     // page n : snum = total - (n - 1) * 10
 --%>
 
+<%-- 게시판, 자료실과는 달리 갤러리의 페이지당 게시물 수는 10이 아닌 24로 설정!!--%>
+
 <fmt:parseNumber var="cp" value="${param.cp}" />
-<fmt:parseNumber var="pp" value="10" />
+<fmt:parseNumber var="pp" value="24" />
 
 <fmt:parseNumber var="sp" integerOnly="true" value="${((cp - 1) / pp)}" />
 <fmt:parseNumber var="sp" value="${sp * 10 + 1}" />
 <fmt:parseNumber var="ep" value="${sp + 9}"/>
 
-<fmt:parseNumber var="tp" value="${pdcnt / pp}" integerOnly="true" />
-<c:if test="${(pdcnt % pp) > 0}">
+<fmt:parseNumber var="tp" value="${galcnt / pp}" integerOnly="true" />
+<c:if test="${(galcnt % pp) > 0}">
     <fmt:parseNumber var="tp" value="${tp + 1}" />
 </c:if>
 
 <fmt:parseNumber var="snum" integerOnly="true"
-         value="${pdcnt - (cp - 1) * pp}"  />
+         value="${galcnt - (cp - 1) * pp}"  />
 
 <%-- 검색여부에 따라 네비게이션 링크 출력을 다르게 함 --%>
-<%-- 일반 목록 출력 : /pds/list?cp= --%>
-<%-- 검색후 목록 출력 : /pds/find?findtype=???&findkey=???&cp=?? --%>
-<c:set var="navlnk" value="/pds/list?cp=" />
+<%-- 일반 목록 출력 : /gallery/list?cp= --%>
+<%-- 검색후 목록 출력 : /gallery/find?findtype=???&findkey=???&cp=?? --%>
+<c:set var="navlnk" value="/gallery/list?cp=" />
 <c:if test="${not empty param.findkey}">
     <c:set var="navlnk">
-        /pds/find?findtype=${param.findtype}&findkey=${param.findkey}&cp=</c:set>
+        /gallery/find?findtype=${param.findtype}&findkey=${param.findkey}&cp=</c:set>
 </c:if>
+<%-- 이미지 출력을 위한 기본 주소 설정 --%>
+<%-- http://localhost/cdn/_thumb/small_글번호_파일명_ --%>
+<c:set var="baseImgURL" value="http://localhost/cdn"/>
+<c:set var="thumbURL" value="${baseImgURL}/_thumb/small_"/>
+
+<%-- bootstrap의 card image 사용시
+     card 박스의 크기는 240px (15rem)
+     따라서, 썸네일 이미지의 크기는 220 x 220px로 설정
+     1920x1080 해상도에서 card 박스는 한행에 4개를 배치할 수 있음
+ --%>
+
+
 
 <div id="main">
     <div class="margin30">
-        <h3><i class="bi bi-cloud-download-fill bidragup"></i> 자료실</h3>
+        <h3><i class="bi bi-cloud-download-fill bidragup"></i> 갤러리</h3>
         <hr>
     </div>
 
@@ -68,12 +82,12 @@
                         <option value="userid">작성자</option>
                     </select>&nbsp;
                     <input type="text" name="findkey" id="findkey" class="form-control col-5">
-                    &nbsp;<button type="button" id="pdfindbtn" class="btn btn-dark">
+                    &nbsp;<button type="button" id="galfindbtn" class="btn btn-dark">
                         <i class="bi bi-search"> </i>검색</button>
                 </div>
             </div>
             <div class="col-6 text-right">
-                <button type="button" id="newpd" class="btn btn-info">
+                <button type="button" id="newgal" class="btn btn-info">
                     <i class="bi bi-plus-circle bidragup"></i> 새글쓰기</button>
             </div>
         </c:if>
@@ -81,36 +95,27 @@
 
     <div class="row margin1050">
         <div class="col-12">
-            <table class="table table-striped tblines text-center table-hover">
-                <thead style="background: #dff0d8">
-                <tr><th style="width: 7%">번호</th>
-                    <th>제목</th>
-                    <th style="width: 12%">작성자</th>
-                    <th style="width: 10%">작성일</th>
-                    <th style="width: 7%">추천</th>
-                    <th style="width: 7%">조회</th></tr>
-                </thead>
-                <tbody>
-                <tr class="text-danger"><th>공지</th>
-                    <th><span class="badge badge-danger">Hot</span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </th>
-                    <th>운영자</th>
-                    <th>2021.01.15</th>
-                    <th>10</th>
-                    <th>128</th></tr>
-
-                <c:forEach var="p" items="${pds}">
-                    <tr><td>${snum}</td>
-                        <td><a href="/pds/view?pno=${p.pno}&cp=${cp}">${p.title}</a></td>
-                        <td>${p.userid}</td>
-                        <td>${fn:substring(p.regdate,0,10)}</td>
-                        <td>${p.thumbs}</td><td>${p.views}</td></tr>
-                    <c:set var="snum" value="${snum - 1}" />
+            <ul class="list-inline">
+                <c:forEach var="g" items="${gals}">
+                    <li class="list-inline-item">
+                        <div class="card" style="width: 238px;">
+                            <img src="${thumbURL}${g.gno}_${fn:split(g.fnames,"[/]")[0]}" class="card-img-top"
+                                width="220" height="220" onclick="javascript:showimg('${g.gno}')"
+                            style="cursor: pointer">
+                            <div class="card-body">
+                                <h5 class="card-title">${g.title}</h5>
+                                <p class="card-text">${g.userid}
+                                    <span style="float:right">${fn:substring(g.regdate,0,10)}</span></p>
+                                <p class="card-text">
+                                    <i class="bi bi-eye"></i>${g.views}
+                                    <span style="float:right">
+                                    <i class="bi bi-hand-thumbs-up"></i>${g.thumbs} </span></p>
+                            </div>
+                        </div>
+                    </li>
                 </c:forEach>
+            </ul>
 
-                </tbody>
-            </table>
         </div>
     </div><!-- 게시판 테이블 -->
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="gal">
+<mapper namespace="gallery">
     <insert id="insertGallery" statementType="PREPARED"
             parameterType="qkfns.spring.mvc.vo.GalleryVO">
         insert into Gallery (title, userid, contents, fnames, fsizes, uuid)
@@ -12,9 +12,9 @@
 
     <select id="selectList" statementType="PREPARED"
             resultType="qkfns.spring.mvc.vo.GalleryVO">
-        select gno, title, userid, regdate, thumbs, views
+        select gno, title, userid, regdate, thumbs, views, fnames
         from Gallery
-        order by gno desc limit #{snum}, 10;
+        order by gno desc limit #{snum}, 24;
 
     </select>
 
@@ -30,5 +30,10 @@
         where gno = #{gno};
     </select>
 
+    <select id="lastGalleryID" statementType="PREPARED"
+            resultType="int">
+        select auto_increment-1 gno from information_schema.TABLES
+        where TABLE_NAME = 'Gallery'
+    </select>
 
 </mapper>

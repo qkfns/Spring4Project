@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import qkfns.spring.mvc.service.GalleryService;
 import qkfns.spring.mvc.vo.GalleryVO;
 import qkfns.spring.mvc.vo.PdsVO;
@@ -36,6 +37,23 @@ public class GalleryController {
         gsrv.newGallery(gvo, img);
 
         return "redirect:/gallery/list?cp=1";
+    }
+
+    @GetMapping("/gallery/list")
+    public ModelAndView list(ModelAndView mv, String cp){
+        mv.setViewName("gallery/list.tiles");
+        mv.addObject("gals", gsrv.readGallery(cp));
+        mv.addObject("galcnt",gsrv.countGallery());
+
+        return mv;
+    }
+
+    @GetMapping("gallery/view")
+    public ModelAndView view(ModelAndView mv, String gno){
+        mv.setViewName("gallery/view.tiles");
+        mv.addObject("gal",gsrv.readOneGallery(gno));
+
+        return mv;
     }
 
 }

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import qkfns.spring.mvc.vo.GalleryVO;
 
+import java.util.List;
+
 @Repository("gdao")
 public class GalleryDAOImpl implements GalleryDAO{
 
@@ -13,6 +15,24 @@ public class GalleryDAOImpl implements GalleryDAO{
 
     @Override
     public int insertGallery(GalleryVO gvo) {
-        return sqlSession.insert("gallery.insertGallery", gvo);
+        sqlSession.insert("gallery.insertGallery", gvo);
+
+        // 방금 입력한 갤러리 데이터의 gno값을 조사해서 반환
+        return sqlSession.selectOne("gallery.lastGalleryID");
+    }
+
+    @Override
+    public List<GalleryVO> selectGallery(int snum) {
+        return sqlSession.selectList("gallery.selectList",snum);
+    }
+
+    @Override
+    public int selectCountGallery() {
+        return sqlSession.selectOne("gallery.countGallery");
+    }
+
+    @Override
+    public GalleryVO selectOneGallery(String gno) {
+        return sqlSession.selectOne("gallery.selectOne", gno);
     }
 }
