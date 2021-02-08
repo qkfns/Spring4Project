@@ -128,5 +128,16 @@ firewall-cmd --reload
 http://아이피주소:포트번호           => 404 not found
 http://아이피주소:포트번호/cdn       => 403 forbidden
 
+# 추가 변경 사항  - 이태화 presents
+
+# nginx 유저 변경
+1. vi /etc/nginx/nginx.conf에서 위의 권한 유저로 user 변경
+    #user nginx; <- 주석처리
+    user centos; <- 새로 추가
+
+2. systemctl restart nginx
+
+3. http://아이피:포트/cdn/abc.jpg
+
 
 

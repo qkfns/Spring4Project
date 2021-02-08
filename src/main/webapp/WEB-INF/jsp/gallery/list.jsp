@@ -54,7 +54,8 @@
 </c:if>
 <%-- 이미지 출력을 위한 기본 주소 설정 --%>
 <%-- http://localhost/cdn/_thumb/small_글번호_파일명_ --%>
-<c:set var="baseImgURL" value="http://localhost/cdn"/>
+<%--<c:set var="baseImgURL" value="http://localhost/cdn"/>--%>
+<c:set var="baseImgURL" value="http://3.34.122.27:4417/cdn"/>
 <c:set var="thumbURL" value="${baseImgURL}/_thumb/small_"/>
 
 <%-- bootstrap의 card image 사용시

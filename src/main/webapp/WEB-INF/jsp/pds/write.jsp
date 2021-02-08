@@ -42,15 +42,15 @@
                 <div class="form-group row">
                     <label for="file1" class="col-form-label col-2 text-right">파일첨부</label>
                     <div class="custom-file col-9">
-                        <input type="file" id="file1" name="file1" class="custom-file-input">
+                        <input type="file" id="file1" name="file" class="custom-file-input">
                         <label class="custom-file-label">첨부할 파일을 선택하세요</label>
                     </div>
                     <div class="custom-file col-9 offset-2">
-                        <input type="file" id="file2" name="file2" class="custom-file-input">
+                        <input type="file" id="file2" name="file" class="custom-file-input">
                         <label class="custom-file-label">첨부할 파일을 선택하세요</label>
                     </div>
                     <div class="custom-file col-9 offset-2">
-                        <input type="file" id="file3" name="file3" class="custom-file-input">
+                        <input type="file" id="file3" name="file" class="custom-file-input">
                         <label class="custom-file-label">첨부할 파일을 선택하세요</label>
                     </div>
                 </div>
